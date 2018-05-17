@@ -1,0 +1,51 @@
+{
+  "name": "toast-eduzz",
+  "version": "1.0.0",
+  "description": "Toast Eduzz",
+  "author": "Juan Pinheiro",
+  "license": "MIT",
+  "main": "index.js",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.4.0",
+    "gulp-uglify": "^2.0.1",
+    "gulp-util": "^3.0.8",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src/**/*.scss",
+    "src/**/*.js",
+    "dist/*.css",
+    "dist/*.js"
+  ],
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp watch",
+    "prepublish": "gulp build"
+  },
+  "directories": {
+    "assets": {
+      "css": [
+        "dist/notification-checkout-eduzz.min.css"
+      ],
+      "js": [
+        "dist/notification-checkout-eduzz.min.js"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eduzz/toast-eduzz.git"
+  },
+  "dependencies": {
+    "toast-eduzz": "^1.0.5"
+  }
+}

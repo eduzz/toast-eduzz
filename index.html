@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+		<title>Eduzz - Notification Checkout</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="dist/toast-eduzz.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="container">
+			<div class="centered col-md-6 col-md-offset-3 text-center">
+				<h1>Eduzz - Notification Checkout</h1>
+				<p class="player">
+					<img src="images/player.png" class="img-responsive">
+				</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras consectetur tincidunt erat, at tincidunt dui sagittis vel. Nunc maximus, augue quis pulvinar sodales.</p>
+				<a id="btn-checkout" class="btn btn-primary btn-lg btn-block" href="#">LOREM IPSUM DOLOR SIT AMET!</a>
+			</div>
+
+			<div class="col-xs-12">
+				<h3>Developer Guide</h3>
+				<p>Permite mostrar uma notificação de acordo com o status do conteúdo como previamente configurado na página de Conteúdos do MyEduzz.</p>
+				<br>
+				<h4>Função "notificationCheckoutEduzz"</h4>
+				<p>Deve ser implementado junto ao id do conteúdo.</p>
+				<br>
+				<p>É necessário implementar o código no final da sua página HTML como no exemplo: </p>
+				<pre>
+<span style="color:#aaa">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		...</span>
+		&lt;link rel="stylesheet" type="text/css" href="<b>http://eduzz.com/dev/js/notification-checkout-eduzz.min.css</b>"&gt;
+		<span style="color:#aaa">
+		...
+	&lt;/head&gt;
+	&lt;body&gt;
+		...</span>
+		&lt;script type="text/javascript" src="<b>http://eduzz.com/dev/js/notification-checkout-eduzz.min.js</b>"&gt;&lt;/script&gt;
+		&lt;script type="text/javascript"&gt;
+			notificationCheckoutEduzz.init(<span class="badge">1</span> <b>'1668'</b>);
+		&lt;/script&gt;
+	<span style="color:#aaa">&lt;/body&gt;
+&lt;/html&gt;</span>
+				</pre>
+				<br>
+				<table class="table" style="width: 50%">
+					<tr>
+						<td><span class="badge">1</span></td>
+						<td>ID do conteúdo referente ao cnt_id na tabela TEDConteudos</td>
+						<td>@string</td>
+					</tr>
+				</table>
+				<br>
+			</div>
+		</div>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="dist/toast-eduzz.min.js"></script>
+		<script type="text/javascript">
+			toast.init('33345');
+		</script>
+	</body>
+</html>
