@@ -44,7 +44,7 @@ var toast = {
                 return;
             }
             that.showToast(data[count++], window.TOAST_DELAY || 5000);
-        }, window.TOAST_INTERVAL || 5000);
+        }, window.TOAST_INTERVAL || 6000);
     },
     init: function(productId) {
         var that = this;
