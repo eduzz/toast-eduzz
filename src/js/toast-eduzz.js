@@ -31,11 +31,33 @@ var toast = {
             clearTimeout(timeoutFunc);
         }, timeout);
     },
+    initToast: function() {
+        var that = this;
+        var count = 0;
+
+        var data = window.TOAST_DATA;
+
+        that.showToast(data[count++], window.TOAST_DELAY || 5000);            
+        that.intervalFunc = setInterval(function() {
+            if(count >= data.length && data.length) {
+                that.closeToast();
+                return;
+            }
+            that.showToast(data[count++], window.TOAST_DELAY || 5000);
+        }, window.TOAST_INTERVAL || 5000);
+    },
     init: function(productId) {
         var that = this;
 
+        window.toast = that;
+
         that.toastEl.className = "toastContainer";
         document.body.appendChild(this.toastEl);
+
+        if (window.TOAST_DATA) {
+            that.initToast();
+            return;
+        }
 
         var request = new XMLHttpRequest();
         request.open('GET', 'https://api.eduzz.com/api/contents/notificationCheckoutInfo/' + productId + '.json', true);
@@ -47,31 +69,19 @@ var toast = {
             var data = JSON.parse(request.responseText).data;
 
             data = that.spliceArray(data);
-            console.log(data);
 
             if(!data || !data.length) {
                 return;
             }
 
-            window.toast = that;
-            
-            var count = 0;
+            window.TOAST_DATA = data;
 
-            that.showToast(data[count++], 5000);            
-            that.intervalFunc = setInterval(function() {
-                if(count >= data.length && data.length) {
-                    that.closeToast();
-                    return;
-                }
-                that.showToast(data[count++], 5000);
-            }, 6000);
-
+            that.initToast();
         };
 
         request.send();
     },
     spliceArray: function (data) {
-        console.log(data);
         return data.filter(function(value) {
             return value.status === true;
         }).filter(function(value) {

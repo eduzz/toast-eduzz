@@ -3,7 +3,6 @@ var gulp            = require('gulp'),
     rename          = require('gulp-rename'),
     uglify          = require('gulp-uglify'),
     autoprefixer    = require('gulp-autoprefixer'),
-    gutil           = require('gulp-util'),
     sass            = require('gulp-sass');
 
 
