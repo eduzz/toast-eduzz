@@ -54,6 +54,10 @@ var toast = {
         that.toastEl.className = "toastContainer";
         document.body.appendChild(this.toastEl);
 
+        if (window.TOAST_DATA && window.TOAST_DATA.length == 0) {
+            return;
+        }
+
         if (window.TOAST_DATA) {
             that.initToast();
             return;
