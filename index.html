@@ -59,14 +59,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="dist/toast-eduzz.min.js"></script>
 		<script type="text/javascript">
-			window.TOAST_DATA = [
-				{ "id": 1, "idElem": "xCheckoutTotal", "text": "&Uacute;ltima compra foi realizada nos &uacute;ltimos 2827 minutos", "total": 2827, "status": true, "displayWhen": "1", "icon": "fa-clock-o" },
-				{ "id": 2, "idElem": "xCheckoutDay", "text": "0 pessoas compraram este produto nas &uacute;ltimas 24 horas", "total": 0, "status": true, "displayWhen": "1", "icon": "fa-shopping-cart" },
-				{ "id": 3, "idElem": "xCheckoutWeek", "text": "2 pessoas compraram este produto na &uacute;ltima semana", "total": 2, "status": true, "displayWhen": "1", "icon": "fa-shopping-cart" },
-				{ "id": 4, "idElem": "xAccessTotal", "text": "0 pessoas est&atilde;o acessando este produto", "total": 0, "status": true, "displayWhen": "1", "icon": "fa-users" },
-				{ "id": 5, "idElem": "xAccessDay", "text": "1 pessoa se interessou por este conte&uacute;do nas &uacute;ltimas 24 horas", "total": 1, "status": true, "displayWhen": "1", "icon": "fa-users" },
-				{ "id": 6, "idElem": "xAccessWeek", "text": "14 pessoas se interessaram por este produto na &uacute;ltima semana", "total": 14, "status": true, "displayWhen": "1", "icon": "fa-users" }
-			];
+			window.TOAST_DATA = [{"id":1,"enabled":true,"lt":50,"value":24},{"id":2,"enabled":true,"gt":1,"value":1},{"id":3,"enabled":true,"gt":1,"value":5},{"id":4,"enabled":true,"gt":1,"value":0},{"id":5,"enabled":true,"gt":1,"value":4},{"id":6,"enabled":true,"gt":1,"value":15}];
 			toast.init('33345');
 		</script>
 	</body>

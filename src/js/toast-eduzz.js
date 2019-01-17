@@ -1,11 +1,36 @@
 var toast = {
     toastEl: document.createElement('div'),
-    intervalFunc: function() {},
     closeToast: function() {
         clearInterval(this.intervalFunc);
         this.toastEl.classList.remove('active');
     },
+    getMessage: function(item) {
+        var plural = [
+            'Última compra foi concluída nos últimos {value} minutos',
+            '{value} pessoas compraram este produto nas últimas 24 horas',
+            '{value} pessoas compraram este produto na última semana',
+            '{value} pessoas estão acessando este produto',
+            '{value} pessoas se interessaram por este produto nas últimas 24 horas',
+            '{value} pessoas se interessaram por este produto na última semana'
+        ];
+
+        var singular = [
+            'Última compra foi concluída no último minuto',
+            '{value} pessoa comprarou este produto nas últimas 24 horas',
+            '{value} pessoa comprarou este produto na última semana',
+            '{value} pessoa está acessando este produto',
+            '{value} pessoa se interessarou por este produto nas últimas 24 horas',
+            '{value} pessoa se interessarou por este produto na última semana'
+        ];
+
+        if (item.value === 1) {
+            return singular[item.id - 1].replace('{value}', item.value);
+        }
+
+        return plural[item.id - 1].replace('{value}', item.value);
+    },
     showToast: function(data, timeout) {
+        console.log(data);
         var that = this;
         var elHtml = '<div class="toastIcon">\
               <svg viewBox="0 0 30 25" xmlns="http://www.w3.org/2000/svg">\
@@ -16,7 +41,7 @@ var toast = {
                 </svg>\
             </div> \
             <div class="toastContent"> \
-              <p>' + data.text + '</p> \
+              <p>' + data.message + '</p> \
             </div> \
             <a class="toastClose" onclick="window.toast.closeToast()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"> \
                 <path d="M44.8 9.4l-4.2-4.2L25 20.8 9.4 5.2 5.2 9.4 20.8 25 5.2 40.6l4.2 4.2L25 29.2l15.6 15.6 4.2-4.2L29.2 25"/> \
@@ -35,7 +60,7 @@ var toast = {
         var that = this;
         var count = 0;
 
-        var data = window.TOAST_DATA;
+        var data = that.spliceArray(window.TOAST_DATA);
 
         that.showToast(data[count++], window.TOAST_DELAY || 5000);            
         that.intervalFunc = setInterval(function() {
@@ -47,6 +72,7 @@ var toast = {
         }, window.TOAST_INTERVAL || 6000);
     },
     init: function(productId) {
+        console.log('start');
         var that = this;
 
         window.toast = that;
@@ -64,16 +90,19 @@ var toast = {
         }
 
         var request = new XMLHttpRequest();
-        request.open('GET', 'https://api.eduzz.com/api/contents/notificationCheckoutInfo/' + productId + '.json', true);
-
+        request.open('GET', 'http://localhost:3000/toast/' + productId, true);
         request.onload = function() {
             if (request.status < 200 || request.status > 400) {
                 return;
             }
-            var data = JSON.parse(request.responseText).data;
+            var data = JSON.parse(request.responseText);
+
+            console.log(data);
 
             data = that.spliceArray(data);
 
+            console.log(data);
+            
             if(!data || !data.length) {
                 return;
             }
@@ -86,13 +115,27 @@ var toast = {
         request.send();
     },
     spliceArray: function (data) {
-        return data.filter(function(value) {
-            return value.status === true;
-        }).filter(function(value) {
-            return value.id !== 1 ?
-            parseInt(value.total) >= parseInt(value.displayWhen) :
-            parseInt(value.total) <= parseInt(value.displayWhen);
-        });
+        var that = this;
+
+        return data
+            .filter(function(item) {
+                return item.enabled === true;
+            })
+            .filter(function(item) {
+                if(!!item.gt && item.value > item.gt) {
+                    return true;
+                }
+
+                if(!!item.lt && item.value < item.lt) {
+                    return true
+                }
+
+                return false;
+            })
+            .map(function(item) {
+                item.message = that.getMessage(item);
+                return item;
+            });
     }
 };
 
