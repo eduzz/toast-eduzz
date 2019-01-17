@@ -1,10 +1,10 @@
 var toast = {
     toastEl: document.createElement('div'),
-    closeToast: function() {
+    closeToast: function () {
         clearInterval(this.intervalFunc);
         this.toastEl.classList.remove('active');
     },
-    getMessage: function(item) {
+    getMessage: function (item) {
         var plural = [
             'Última compra foi concluída nos últimos {value} minutos',
             '{value} pessoas compraram este produto nas últimas 24 horas',
@@ -29,8 +29,7 @@ var toast = {
 
         return plural[item.id - 1].replace('{value}', item.value);
     },
-    showToast: function(data, timeout) {
-        console.log(data);
+    showToast: function (data, timeout) {
         var that = this;
         var elHtml = '<div class="toastIcon">\
               <svg viewBox="0 0 30 25" xmlns="http://www.w3.org/2000/svg">\
@@ -51,28 +50,31 @@ var toast = {
         that.toastEl.innerHTML = elHtml;
 
         that.toastEl.classList.add('active');
-        var timeoutFunc = setTimeout(function() {
+        var timeoutFunc = setTimeout(function () {
             that.toastEl.classList.remove('active');
             clearTimeout(timeoutFunc);
         }, timeout);
     },
-    initToast: function() {
+    initToast: function () {
         var that = this;
         var count = 0;
 
         var data = that.spliceArray(window.TOAST_DATA);
 
-        that.showToast(data[count++], window.TOAST_DELAY || 5000);            
-        that.intervalFunc = setInterval(function() {
-            if(count >= data.length && data.length) {
+        if(data && data.length === 0) {
+            return;
+        } 
+
+        that.showToast(data[count++], window.TOAST_DELAY || 5000);
+        that.intervalFunc = setInterval(function () {
+            if (count >= data.length && data.length) {
                 that.closeToast();
                 return;
             }
             that.showToast(data[count++], window.TOAST_DELAY || 5000);
         }, window.TOAST_INTERVAL || 6000);
     },
-    init: function(productId) {
-        console.log('start');
+    init: function (productId) {
         var that = this;
 
         window.toast = that;
@@ -90,20 +92,19 @@ var toast = {
         }
 
         var request = new XMLHttpRequest();
-        request.open('GET', 'https://sun.eduzz.com/toast/' + productId, true);
-        request.onload = function() {
+        request.open('GET', 'http://localhost:3000/toast/' + productId, true);
+        request.onload = function () {
             if (request.status < 200 || request.status > 400) {
                 return;
             }
-            var data = JSON.parse(request.responseText);
+            var data = [];
 
-            console.log(data);
+            try {
+                data = JSON.parse(request.responseText);
+            } catch (err) {
+            }
 
-            data = that.spliceArray(data);
-
-            console.log(data);
-            
-            if(!data || !data.length) {
+            if (!data || !data.length) {
                 return;
             }
 
@@ -118,37 +119,35 @@ var toast = {
         var that = this;
 
         return data
-            .filter(function(item) {
+            .filter(function (item) {
                 return item.enabled === true;
             })
-            .filter(function(item) {
-                if(!!item.gt && item.value > item.gt) {
+            .filter(function (item) {
+                if (!!item.gt && item.value > item.gt) {
                     return true;
                 }
 
-                if(!!item.lt && item.value < item.lt) {
+                if (!!item.lt && item.value < item.lt) {
                     return true
                 }
 
                 return false;
             })
-            .map(function(item) {
+            .map(function (item) {
                 item.message = that.getMessage(item);
                 return item;
-            });
+            }) || [];
     }
 };
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = toast;
-  }
-  else {
+} else {
     if (typeof define === 'function' && define.amd) {
-      define([], function() {
-        return toast;
-      });
+        define([], function () {
+            return toast;
+        });
+    } else {
+        window.toast = toast;
     }
-    else {
-      window.toast = toast;
-    }
-  }
+}
