@@ -4,7 +4,7 @@ declare namespace ToastEduzz {
         intervalFunc(): void,
         closeToast(): void,
         showToast(): void,
-        init(productId: any): void,
+        init(productId: any, urlApiEndpoint?: string): void,
         spliceArray(data: any): any
     }
 }
