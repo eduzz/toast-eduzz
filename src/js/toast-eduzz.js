@@ -74,7 +74,7 @@ var toast = {
             that.showToast(data[count++], window.TOAST_DELAY || 5000);
         }, window.TOAST_INTERVAL || 6000);
     },
-    init: function (productId) {
+    init: function (productId, urlApiEndpoint) {
         var that = this;
 
         window.toast = that;
@@ -91,8 +91,10 @@ var toast = {
             return;
         }
 
+        var url = (urlApiEndpoint || 'https://sun.eduzz.com/toast') + '/';
+
         var request = new XMLHttpRequest();
-        request.open('GET', 'https://sun.eduzz.com/toast/' + productId, true);
+        request.open('GET', url + productId, true);
         request.onload = function () {
             if (request.status < 200 || request.status > 400) {
                 return;
